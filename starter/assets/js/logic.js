@@ -68,30 +68,64 @@ const startScreen = document.querySelector('#start-screen')
 const questionsScreen = document.querySelector('#questions')
 const questionTitle = document.querySelector("#question-title")
 const choicesDiv = document.querySelector("#choices")
+const timeEl = document.querySelector("#time")
+const endScreen = document.querySelector('#end-screen')
 
 
 
 // Changeable Variables
 let questionIndex = 0;
+let timeLeft = 99
+let intervalId = null
 
 // FUNCTIONS 
+const countDown = () => {
 
-const displayQuestion = (num) => {
-    questionTitle.textContent = questionsArray[num].question
-    choicesDiv.textContent = questionsArray[num].
+    // if no time left, finish the game
+    if (timeLeft === 0){
+        clearInterval(intervalId)
+        quizFinished()
+        
+
+    // else, keep running
+    } else {
+        timeLeft --
+        timeEl.textContent = timeLeft;
+    }
+
 }
 
+
+
+// *****NOT FINISHED
+const displayQuestion = (num) => {
+    questionTitle.textContent = questionsArray[num].question
+    let options = questionsArray[num].options
+    console.log(options)
+    
+}
+
+const quizFinished = () => {
+    endScreen.classList.toggle("hide")
+    questionsScreen.classList.toggle("hide")
+}
 
 // EVENTS 
 
 startBtn.addEventListener('click', function() {
+    //reset timer to 99
+    timeLeft = 99;
+
+    // start timer
+    intervalId = setInterval(countDown, 10)
+
     // Hide start section
     startScreen.classList.toggle("hide")
 
     // show question section
     questionsScreen.classList.toggle("hide")
     displayQuestion(questionIndex)
-    
+
 })
 
 
