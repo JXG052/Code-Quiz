@@ -52,5 +52,11 @@ const questionsArray = [
         ]
     }
 ]
+const answersArray = []
+answersArray[0] = questionsArray[0].options[2];
+answersArray[1] = questionsArray[1].options[2];
+answersArray[2] = questionsArray[2].options[3];
+answersArray[3] = questionsArray[3].options[2];
+answersArray[4] = questionsArray[4].options[3];
 
-console.log(questionsArray[0].options[2])
+console.log(answersArray)
