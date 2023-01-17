@@ -79,6 +79,8 @@ let timeLeft = 99
 let intervalId = null
 
 // FUNCTIONS 
+
+
 const countDown = () => {
 
     // if no time left, finish the game
@@ -95,20 +97,25 @@ const countDown = () => {
 
 }
 
-
-
 // *****NOT FINISHED
 const displayQuestion = (num) => {
     questionTitle.textContent = questionsArray[num].question
     let options = questionsArray[num].options
     console.log(options)
-    
+
+    // create a new button for each option
+    for (let i = 0; i < questionsArray[num].options.length; i++){
+        const btn = document.createElement("button");
+        btn.innerText = questionsArray[num].options[i];
+        choicesDiv.appendChild(btn);
+    }
 }
 
 const quizFinished = () => {
     endScreen.classList.toggle("hide")
     questionsScreen.classList.toggle("hide")
 }
+
 
 // EVENTS 
 
@@ -117,7 +124,7 @@ startBtn.addEventListener('click', function() {
     timeLeft = 99;
 
     // start timer
-    intervalId = setInterval(countDown, 10)
+    intervalId = setInterval(countDown, 1000)
 
     // Hide start section
     startScreen.classList.toggle("hide")
