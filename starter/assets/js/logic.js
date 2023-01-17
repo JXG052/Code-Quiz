@@ -101,18 +101,22 @@ const countDown = () => {
 // *****NOT FINISHED
 const displayQuestion = (num) => {
 
-    // if we've ran out of questions
+    // if we've finished quiz
     if (num >= questionsArray.length){
+        questionsScreen.classList.toggle("hide");
         endScreen.classList.toggle("hide")
 
-    // else if - btns already exist
+
+    // else if - btns already exist i.e not question 1
     } else if (choicesDiv.childElementCount > 0){
-        
+        questionTitle.textContent = questionsArray[num].question
         for (let i = 0; i < choicesDiv.childElementCount; i++){
-            choicesDiv.children[i].innerHTML = "test"
+            choicesDiv.children[i].innerHTML = questionsArray[num].options[i];
         }
 
     } 
+
+    // create buttons
     else { 
     questionTitle.textContent = questionsArray[num].question
     let options = questionsArray[num].options
