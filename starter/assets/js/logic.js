@@ -77,6 +77,7 @@ const endScreen = document.querySelector('#end-screen')
 let questionIndex = 0;
 let timeLeft = 99
 let intervalId = null
+let score = 0;
 
 // FUNCTIONS 
 
@@ -99,17 +100,58 @@ const countDown = () => {
 
 // *****NOT FINISHED
 const displayQuestion = (num) => {
+
+    // if we've ran out of questions
+    if (num >= questionsArray.length){
+        endScreen.classList.toggle("hide")
+
+    // else if - btns already exist
+    } else if (choicesDiv.childElementCount > 0){
+        
+        for (let i = 0; i < choicesDiv.childElementCount; i++){
+            choicesDiv.children[i].innerHTML = "test"
+        }
+
+    } 
+    else { 
     questionTitle.textContent = questionsArray[num].question
     let options = questionsArray[num].options
     console.log(options)
-
+    const btn = []
     // create a new button for each option
     for (let i = 0; i < questionsArray[num].options.length; i++){
-        const btn = document.createElement("button");
-        btn.innerText = questionsArray[num].options[i];
-        choicesDiv.appendChild(btn);
+    
+        // if no elements, create them
+        if(choicesDiv.childElementCount < 4){
+            btn[i] = document.createElement("button");
+            btn[i].innerText = questionsArray[num].options[i];
+            choicesDiv.appendChild(btn[i]);
+        } else {
+            btn[i].textContent = questionsArray[num].options[i];
+        }
+
+        
+            // when button clicked
+            btn[i].addEventListener("click", function (e){
+                if (e.target.innerText === answersArray[num]){
+                    score ++;
+                    questionIndex ++
+                    displayQuestion(questionIndex)
+                } else {
+                    questionIndex ++
+                    displayQuestion(questionIndex)
+                }
+                
+                })
+        } 
+        
+       
+            
+
+        }
+    
     }
-}
+
 
 const quizFinished = () => {
     endScreen.classList.toggle("hide")
@@ -134,6 +176,5 @@ startBtn.addEventListener('click', function() {
     displayQuestion(questionIndex)
 
 })
-
 
 
