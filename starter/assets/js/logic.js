@@ -2,58 +2,7 @@
 
 //  QUESTIONS AND ANSWERS ARRAY *** NEEDS LINKING TO questions.js
 
-const questionsArray = [
-    {
-        num: 1,
-        question: "Commonly used data types DO NOT include:",
-        options: [
-            "strings", 
-            "booleans", 
-            "alerts",
-            "numbers"
-        ]
-    },
-    {
-        num: 2, 
-        question: "The condition within an if statement is enclosed within ______",
-        options: [
-            "quotes",
-            "curly brackets",
-            "parenthesis", 
-            "sqare brackets"
-        ]
-    },
-    {
-        num: 3, 
-        question: "Arrays in JavaScript can be used to store _____",
-        options: [
-            "numbers and strings",
-            "other arrays",
-            "booleans", 
-            "all of the above"
-        ]
-    },
-    {
-        num: 4, 
-        question: "String values must be enclosed within ______ when being assigned to variables",
-        options: [
-            "commas",
-            "curly braces",
-            "quotes", 
-            "parenthesis"
-        ]
-    },
-    {
-        num: 5, 
-        question: "A very useful tool used during development and debugging for printing content to the debugger is:",
-        options: [
-            "JavaScript",
-            "terminal/bash",
-            "for loops", 
-            "console.log"
-        ]
-    }
-]
+
 const answersArray = []
 answersArray[0] = questionsArray[0].options[2];
 answersArray[1] = questionsArray[1].options[2];
@@ -71,8 +20,8 @@ const choicesDiv = document.querySelector("#choices")
 const timeEl = document.querySelector("#time")
 const endScreen = document.querySelector('#end-screen')
 const finalScore = document.querySelector("#final-score")
-
-
+const submitBtn = document.querySelector('#submit')
+const initials = document.querySelector('#initials')
 
 // Changeable Variables
 let questionIndex = 0;
@@ -81,15 +30,12 @@ let intervalId = null
 let score = 0;
 
 // FUNCTIONS 
-
-
 const countDown = () => {
 
     // if no time left, finish the game
     if (timeLeft === 0){
         clearInterval(intervalId)
-        quizFinished()
-        
+        quizFinished()  
 
     // else, keep running
     } else {
@@ -99,116 +45,66 @@ const countDown = () => {
 
 }
 
-// *****NOT FINISHED
-const displayQuestion = (num) => {
-
+// changes the display based on what question we are on
+const displayQuestion = () => {
+    console.log("Question index:" + questionIndex )
     // if we've finished quiz
-    if (num >= questionsArray.length){
+    if (questionIndex >= questionsArray.length){
+        console.log("reached")
         questionsScreen.classList.toggle("hide");
         endScreen.classList.toggle("hide")
         finalScore.textContent = score;
-
+        clearInterval(intervalId)
 
     // else if - btns already exist i.e not question 1
     } else if (choicesDiv.childElementCount > 0){
-        questionTitle.textContent = questionsArray[num].question
+        questionTitle.textContent = questionsArray[questionIndex].question
         for (let i = 0; i < choicesDiv.childElementCount; i++){
-            choicesDiv.children[i].innerHTML = questionsArray[num].options[i];
-            // when button clicked
-            btn[i].addEventListener("click", function (e){
-                if (e.target.innerText === answersArray[num]){
-                    score ++;
-                    questionIndex ++;
-                    console.log(`e.target.innerText: ${e.target.innerText}`)
-                    console.log(`answersArray[num]: ${answersArray[num]}`)
-                    console.log(`score: ${score}`)
-                    
-                    
-                } else {
-                    questionIndex ++;
-                    console.log(`e.target.innerText: ${e.target.innerText}`)
-                    console.log(`answersArray[num]: ${answersArray[num]}`)
-                    console.log(`score: ${score}`)
-                    
-                }
-                console.log(`Question Index: ${questionIndex}`)
-                displayQuestion(questionIndex)
-                })
-                } 
+            choicesDiv.children[i].innerHTML = questionsArray[questionIndex].options[i];
+            } 
     }
-
-
-     
 
     // create buttons
     else { 
-    questionTitle.textContent = questionsArray[num].question
-    let options = questionsArray[num].options
+    questionTitle.textContent = questionsArray[questionIndex].question
+    
     const btn = []
     // create a new button for each option
-    for (let i = 0; i < questionsArray[num].options.length; i++){
+    for (let i = 0; i < questionsArray[questionIndex].options.length; i++){
     
         // if no elements, create them
         if(choicesDiv.childElementCount < 4){
             btn[i] = document.createElement("button");
-            btn[i].innerText = questionsArray[num].options[i];
+            btn[i].innerText = questionsArray[questionIndex].options[i];
             choicesDiv.appendChild(btn[i]);
         } else {
-            btn[i].textContent = questionsArray[num].options[i];
+            btn[i].textContent = questionsArray[questionIndex].options[i];
         }
+
+        // create click event for each button
         btn[i].addEventListener("click", function (e){
-            if (e.target.innerText === answersArray[num]){
+
+            // if correct
+            if (e.target.innerText === answersArray[questionIndex]){
                 score ++;
                 questionIndex ++;
-                console.log(`e.target.innerText: ${e.target.innerText}`)
-                console.log(`answersArray[num]: ${answersArray[num]}`)
-                console.log(`score: ${score}`)
+
                 
-                
+            // if incorrect
             } else {
                 questionIndex ++;
-                console.log(`e.target.innerText: ${e.target.innerText}`)
-                console.log(`answersArray[num]: ${answersArray[num]}`)
-                console.log(`score: ${score}`)
+                timeLeft -= 10;
                 
             }
-            console.log(`Question Index: ${questionIndex}`)
-            displayQuestion(questionIndex)
+            
+            displayQuestion()
             })
     }}
 
 } 
-        
-        
-        //     // when button clicked
-        //     btn[i].addEventListener("click", function (e){
-        //         if (e.target.innerText === answersArray[num]){
-        //             score ++;
-        //             questionIndex ++;
-        //             console.log(`e.target.innerText: ${e.target.innerText}`)
-        //             console.log(`answersArray[num]: ${answersArray[num]}`)
-        //             console.log(`score: ${score}`)
-                    
-                    
-        //         } else {
-        //             questionIndex ++;
-        //             console.log(`e.target.innerText: ${e.target.innerText}`)
-        //             console.log(`answersArray[num]: ${answersArray[num]}`)
-        //             console.log(`score: ${score}`)
-                    
-        //         }
-        //         console.log(`Question Index: ${questionIndex}`)
-        //         displayQuestion(questionIndex)
-        //         })
-        // } 
-        // }
 
 
 
-const quizFinished = () => {
-    endScreen.classList.toggle("hide")
-    questionsScreen.classList.toggle("hide")
-}
 
 
 // EVENTS 
@@ -229,5 +125,14 @@ startBtn.addEventListener('click', function() {
 
 })
 
+submitBtn.addEventListener("click", function(event){
+    event.preventDefault()
+    let saveScore = {
+        initials: initials.value, 
+        score: score
+    }
+    localStorage.setItem("score", JSON.stringify(saveScore))
+    
+})
 
 
