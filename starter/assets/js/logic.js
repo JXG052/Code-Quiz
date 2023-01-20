@@ -70,6 +70,7 @@ const questionTitle = document.querySelector("#question-title")
 const choicesDiv = document.querySelector("#choices")
 const timeEl = document.querySelector("#time")
 const endScreen = document.querySelector('#end-screen')
+const finalScore = document.querySelector("#final-score")
 
 
 
@@ -105,6 +106,7 @@ const displayQuestion = (num) => {
     if (num >= questionsArray.length){
         questionsScreen.classList.toggle("hide");
         endScreen.classList.toggle("hide")
+        finalScore.textContent = score;
 
 
     // else if - btns already exist i.e not question 1
@@ -112,15 +114,36 @@ const displayQuestion = (num) => {
         questionTitle.textContent = questionsArray[num].question
         for (let i = 0; i < choicesDiv.childElementCount; i++){
             choicesDiv.children[i].innerHTML = questionsArray[num].options[i];
-        }
+            // when button clicked
+            btn[i].addEventListener("click", function (e){
+                if (e.target.innerText === answersArray[num]){
+                    score ++;
+                    questionIndex ++;
+                    console.log(`e.target.innerText: ${e.target.innerText}`)
+                    console.log(`answersArray[num]: ${answersArray[num]}`)
+                    console.log(`score: ${score}`)
+                    
+                    
+                } else {
+                    questionIndex ++;
+                    console.log(`e.target.innerText: ${e.target.innerText}`)
+                    console.log(`answersArray[num]: ${answersArray[num]}`)
+                    console.log(`score: ${score}`)
+                    
+                }
+                console.log(`Question Index: ${questionIndex}`)
+                displayQuestion(questionIndex)
+                })
+                } 
+    }
 
-    } 
+
+     
 
     // create buttons
     else { 
     questionTitle.textContent = questionsArray[num].question
     let options = questionsArray[num].options
-    console.log(options)
     const btn = []
     // create a new button for each option
     for (let i = 0; i < questionsArray[num].options.length; i++){
@@ -133,28 +156,53 @@ const displayQuestion = (num) => {
         } else {
             btn[i].textContent = questionsArray[num].options[i];
         }
-
-        
-            // when button clicked
-            btn[i].addEventListener("click", function (e){
-                if (e.target.innerText === answersArray[num]){
-                    score ++;
-                    questionIndex ++
-                    displayQuestion(questionIndex)
-                } else {
-                    questionIndex ++
-                    displayQuestion(questionIndex)
-                }
+        btn[i].addEventListener("click", function (e){
+            if (e.target.innerText === answersArray[num]){
+                score ++;
+                questionIndex ++;
+                console.log(`e.target.innerText: ${e.target.innerText}`)
+                console.log(`answersArray[num]: ${answersArray[num]}`)
+                console.log(`score: ${score}`)
                 
-                })
-        } 
-        
-       
-            
+                
+            } else {
+                questionIndex ++;
+                console.log(`e.target.innerText: ${e.target.innerText}`)
+                console.log(`answersArray[num]: ${answersArray[num]}`)
+                console.log(`score: ${score}`)
+                
+            }
+            console.log(`Question Index: ${questionIndex}`)
+            displayQuestion(questionIndex)
+            })
+    }}
 
-        }
-    
-    }
+} 
+        
+        
+        //     // when button clicked
+        //     btn[i].addEventListener("click", function (e){
+        //         if (e.target.innerText === answersArray[num]){
+        //             score ++;
+        //             questionIndex ++;
+        //             console.log(`e.target.innerText: ${e.target.innerText}`)
+        //             console.log(`answersArray[num]: ${answersArray[num]}`)
+        //             console.log(`score: ${score}`)
+                    
+                    
+        //         } else {
+        //             questionIndex ++;
+        //             console.log(`e.target.innerText: ${e.target.innerText}`)
+        //             console.log(`answersArray[num]: ${answersArray[num]}`)
+        //             console.log(`score: ${score}`)
+                    
+        //         }
+        //         console.log(`Question Index: ${questionIndex}`)
+        //         displayQuestion(questionIndex)
+        //         })
+        // } 
+        // }
+
 
 
 const quizFinished = () => {
@@ -180,5 +228,6 @@ startBtn.addEventListener('click', function() {
     displayQuestion(questionIndex)
 
 })
+
 
 
