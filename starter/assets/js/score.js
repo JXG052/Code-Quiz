@@ -26,6 +26,6 @@ savedScoreArray.forEach( (el) => {
 
 clearBtn.addEventListener("click", function (){
     localStorage.clear()
-    savedScoreArray.forEach(element => element.remove())
+    highScoresList.remove()
 })
 
