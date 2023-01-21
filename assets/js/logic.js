@@ -25,7 +25,7 @@ const incorrectSound = new Audio ('./assets/sfx/incorrect.wav')
 
 // Changeable Variables
 let questionIndex = 0;
-let timeLeft = 99
+let timeLeft = 20
 let intervalId = null
 let score = 0;
 let highScoresArray = []
@@ -34,9 +34,13 @@ let highScoresArray = []
 const countDown = () => {
 
     // if no time left, finish the game
-    if (timeLeft === 0){
+    if (timeLeft <= 0){
         clearInterval(intervalId)
-        quizFinished()  
+        questionsScreen.classList.toggle("hide");
+        endScreen.classList.toggle("hide")
+        finalScore.textContent = score;
+        timeEl.textContent = `0`;
+        timeEl.style.color = "red";
 
     // else, keep running
     } else {
@@ -105,8 +109,8 @@ const displayQuestion = () => {
 // EVENTS 
 startBtn.addEventListener('click', function() {
     
-    //reset timer to 99
-    timeLeft = 99;
+    //reset timer to 20
+    timeLeft = 20;
 
     // start timer
     intervalId = setInterval(countDown, 1000)
