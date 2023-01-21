@@ -28,6 +28,7 @@ let questionIndex = 0;
 let timeLeft = 99
 let intervalId = null
 let score = 0;
+let highScoresArray = []
 
 // FUNCTIONS 
 const countDown = () => {
@@ -127,11 +128,37 @@ startBtn.addEventListener('click', function() {
 
 submitBtn.addEventListener("click", function(event){
     event.preventDefault()
-    let saveScore = {
-        initials: initials.value, 
+    let saveObj = {
+        initials: initials.value,
         score: score
     }
-    localStorage.setItem("score", JSON.stringify(saveScore))
+    
+
+    // init pulled scores
+    let pulledScores = []
+
+
+    // if no scores
+        // log this high score
+    if (localStorage.getItem("score") === null){
+        localStorage.setItem("score", JSON.stringify(saveObj) )
+    }
+
+    // if there are already saved scores
+    else {
+        pulledScores = JSON.parse(localStorage.getItem("score"))
+        pulledScores.push(saveObj)
+        console.log(pulledScores)
+        localStorage.setItem("score", JSON.stringify(pulledScores))
+    }
+
+
+
+    // savedArray = JSON.parse(localStorage.getItem('score'))
+    // savedArray.push({initials: initials.value, score: score})
+    // localStorage.setItem('score', JSON.stringify(savedArray))
+    //if there are already values in savedStorage
+    // then 
     
 })
 

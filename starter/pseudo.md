@@ -58,6 +58,7 @@
         btn.innerText = questionsArray[0].options[i];
         document.choices.appendChild(btn);
 
+* 
 
 
 
