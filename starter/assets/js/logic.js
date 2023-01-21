@@ -2,6 +2,8 @@
 
 //  QUESTIONS AND ANSWERS ARRAY *** NEEDS LINKING TO questions.js
 
+ // buffers automatically when created
+
 
 const answersArray = []
 answersArray[0] = questionsArray[0].options[2];
@@ -9,6 +11,7 @@ answersArray[1] = questionsArray[1].options[2];
 answersArray[2] = questionsArray[2].options[3];
 answersArray[3] = questionsArray[3].options[2];
 answersArray[4] = questionsArray[4].options[3];
+
 
 
 // DOM Elements
@@ -22,6 +25,10 @@ const endScreen = document.querySelector('#end-screen')
 const finalScore = document.querySelector("#final-score")
 const submitBtn = document.querySelector('#submit')
 const initials = document.querySelector('#initials')
+
+// AUDIO
+const  correctSound = new Audio ('./assets/sfx/correct.wav');
+const incorrectSound = new Audio ('./assets/sfx/incorrect.wav')
 
 // Changeable Variables
 let questionIndex = 0;
@@ -87,12 +94,14 @@ const displayQuestion = () => {
 
             // if correct
             if (e.target.innerText === answersArray[questionIndex]){
+                correctSound.play()
                 score ++;
                 questionIndex ++;
 
                 
             // if incorrect
             } else {
+                incorrectSound.play()
                 questionIndex ++;
                 timeLeft -= 10;
                 
@@ -111,6 +120,8 @@ const displayQuestion = () => {
 // EVENTS 
 
 startBtn.addEventListener('click', function() {
+    
+    
     //reset timer to 99
     timeLeft = 99;
 
