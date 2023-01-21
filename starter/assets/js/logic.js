@@ -127,6 +127,8 @@ startBtn.addEventListener('click', function() {
 })
 
 submitBtn.addEventListener("click", function(event){
+    let tempScores = JSON.parse(localStorage.getItem("score"))
+    console.log(tempScores)
     event.preventDefault()
     let saveObj = {
         initials: initials.value,
@@ -145,20 +147,31 @@ submitBtn.addEventListener("click", function(event){
     }
 
     // if there are already saved scores
-    else {
-        pulledScores = JSON.parse(localStorage.getItem("score"))
+    // if it's the second score 
+        
+    else if (tempScores.length === 1){
+        
+
+        
+        pulledScores.push(tempScores)
         pulledScores.push(saveObj)
+        localStorage.setItem("score", JSON.stringify(pulledScores))
+    }
+    // if the pulled data is an array of objects, 
+    // iterate through each object before pushing 
+    else {
+        tempScores.forEach(element => {
+            return pulledScores.push(element);
+        })
+        pulledScores.push(saveObj);
         console.log(pulledScores)
         localStorage.setItem("score", JSON.stringify(pulledScores))
+        
     }
 
 
 
-    // savedArray = JSON.parse(localStorage.getItem('score'))
-    // savedArray.push({initials: initials.value, score: score})
-    // localStorage.setItem('score', JSON.stringify(savedArray))
-    //if there are already values in savedStorage
-    // then 
+
     
 })
 
