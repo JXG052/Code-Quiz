@@ -146,20 +146,10 @@ submitBtn.addEventListener("click", function(event){
         localStorage.setItem("score", JSON.stringify(saveObj) )
     }
 
-    // if there are already saved scores
-    // if it's the second score 
-        
-    else if (tempScores.length === 1){
-        
 
-        
-        pulledScores.push(tempScores)
-        pulledScores.push(saveObj)
-        localStorage.setItem("score", JSON.stringify(pulledScores))
-    }
     // if the pulled data is an array of objects, 
     // iterate through each object before pushing 
-    else {
+    else if (tempScores.length > 1) {
         tempScores.forEach(element => {
             return pulledScores.push(element);
         })
@@ -167,6 +157,18 @@ submitBtn.addEventListener("click", function(event){
         console.log(pulledScores)
         localStorage.setItem("score", JSON.stringify(pulledScores))
         
+    }
+    
+    // if the pulled data is a single object
+    // i.e if it's the second score  
+    // turn into an array of length 2 
+  
+        
+    else {
+        console.log("reached1")
+        pulledScores.push(tempScores)
+        pulledScores.push(saveObj)
+        localStorage.setItem("score", JSON.stringify(pulledScores))
     }
 
 
