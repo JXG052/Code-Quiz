@@ -20,10 +20,25 @@ const submitBtn = document.querySelector('#submit')
 const initials = document.querySelector('#initials')
 const saved = document.querySelector(".saved");
 const error = document.querySelector(".error");
+const toggleSoundBtn = document.querySelector("#toggleSound")
 
 // AUDIO
+let soundOn = true;
 const  correctSound = new Audio ('./assets/sfx/correct.wav');
 const incorrectSound = new Audio ('./assets/sfx/incorrect.wav')
+
+// TOGGLE AUDIO
+toggleSoundBtn.addEventListener("click", function (){
+    if (soundOn){
+        toggleSoundBtn.innerHTML = '<i class="fa-solid fa-volume-xmark"></i>'
+        soundOn = false;
+    }
+    else {
+        toggleSoundBtn.innerHTML = '<i class="fa-solid fa-volume-high"></i>'
+        soundOn = true;
+    }
+
+})
 
 // Changeable Variables
 let questionIndex = 0;
@@ -91,13 +106,19 @@ const displayQuestion = () => {
 
                     // if correct
                     if (e.target.innerText === answersArray[questionIndex]){
-                        //correctSound.play()
+                        if (soundOn) {
+                            correctSound.play()
+                            
+                        }
                         score ++;
                         questionIndex ++;
 
                     // if incorrect
                     } else {
-                        //incorrectSound.play()
+                        if (soundOn){
+                            incorrectSound.play()
+                        }
+                        
                         questionIndex ++;
                         timeLeft -= 10;
                     }
