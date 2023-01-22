@@ -58,7 +58,16 @@
         btn.innerText = questionsArray[0].options[i];
         document.choices.appendChild(btn);
 
-* 
+## Changes after Launch:
+
+### Valid initials input
+
+* if initials 
+
+function useRegex(input) {
+    let regex = /^[A-Za-z0-9]+$/i;
+    return regex.test(input);
+}
 
 
 

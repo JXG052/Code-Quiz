@@ -69,6 +69,11 @@ li:nth-child(odd) {
 .saved {
   display: none;
 }
+
+.error{
+  display: none;
+}
+
 .scores {
   position: absolute;
   top: 10px;
