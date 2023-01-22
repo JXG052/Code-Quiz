@@ -66,6 +66,9 @@ li:nth-child(odd) {
   text-align: center;
 }
 
+.saved {
+  display: none;
+}
 .scores {
   position: absolute;
   top: 10px;
