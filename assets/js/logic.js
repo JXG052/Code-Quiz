@@ -18,6 +18,7 @@ const endScreen = document.querySelector('#end-screen')
 const finalScore = document.querySelector("#final-score")
 const submitBtn = document.querySelector('#submit')
 const initials = document.querySelector('#initials')
+const saved = document.querySelector(".saved");
 
 // AUDIO
 const  correctSound = new Audio ('./assets/sfx/correct.wav');
@@ -126,6 +127,7 @@ startBtn.addEventListener('click', function() {
 
 // Button that adds initials and highscore to local storage
 submitBtn.addEventListener("click", function(event){
+
     event.preventDefault()
     // stop multiple clicks
     submitBtn.disabled = true;
@@ -138,6 +140,11 @@ submitBtn.addEventListener("click", function(event){
         initials: initials.value,
         score: score
     }
+    // reset initials
+    initials.value = ""
+
+    // confirm save
+    saved.style.display = "inline";
 
     // this will store the pulled data in the correct format
     let pulledScores = []
