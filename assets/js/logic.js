@@ -19,6 +19,7 @@ const finalScore = document.querySelector("#final-score")
 const submitBtn = document.querySelector('#submit')
 const initials = document.querySelector('#initials')
 const saved = document.querySelector(".saved");
+const error = document.querySelector(".error");
 
 // AUDIO
 const  correctSound = new Audio ('./assets/sfx/correct.wav');
@@ -90,13 +91,13 @@ const displayQuestion = () => {
 
                     // if correct
                     if (e.target.innerText === answersArray[questionIndex]){
-                        correctSound.play()
+                        //correctSound.play()
                         score ++;
                         questionIndex ++;
 
                     // if incorrect
                     } else {
-                        incorrectSound.play()
+                        //incorrectSound.play()
                         questionIndex ++;
                         timeLeft -= 10;
                     }
@@ -125,6 +126,8 @@ startBtn.addEventListener('click', function() {
 
 })
 
+// if 
+
 // Button that adds initials and highscore to local storage
 submitBtn.addEventListener("click", function(event){
 
@@ -132,48 +135,63 @@ submitBtn.addEventListener("click", function(event){
     // stop multiple clicks
     submitBtn.disabled = true;
 
-    // store current high scores
-    let tempScores = JSON.parse(localStorage.getItem("score"))
-
-    // variable for this highscore
-    let saveObj = {
-        initials: initials.value,
-        score: score
-    }
-    // reset initials
-    initials.value = ""
-
-    // confirm save
-    saved.style.display = "inline";
-
-    // this will store the pulled data in the correct format
-    let pulledScores = []
-
-    // if no scores
-    // log this high score
-    if (localStorage.getItem("score") === null){
-        localStorage.setItem("score", JSON.stringify(saveObj) )
-    }
-
-    // if the pulled data is an array of objects, 
-    // iterate through each object before pushing 
-    else if (tempScores.length > 1) {
-        tempScores.forEach(element => {
-            return pulledScores.push(element);
-        })
-        pulledScores.push(saveObj);
-        console.log(pulledScores)
-        localStorage.setItem("score", JSON.stringify(pulledScores))
-    }
+    // validate input
     
-    // if the pulled data is a single object
-    // i.e if it's the second score  
-    // turn into an array of length 2 
+    let string = initials.value
+    let regex = /^[A-Za-z]+$/i;
+    console.log(string.match(regex));
+
+    if ( !string.match(regex)){
+        error.style.display = "block";
+        error.style.color = "red";
+        return;
+    }
     else {
-        console.log("reached1")
-        pulledScores.push(tempScores)
-        pulledScores.push(saveObj)
-        localStorage.setItem("score", JSON.stringify(pulledScores))
+    
+
+
+        // store current high scores
+        let tempScores = JSON.parse(localStorage.getItem("score"))
+        
+        // variable for this highscore
+        let saveObj = {
+            initials: initials.value,
+            score: score
+        }
+        // reset initials
+        initials.value = ""
+
+        // confirm save
+        saved.style.display = "inline";
+
+        // this will store the pulled data in the correct format
+        let pulledScores = []
+
+        // if no scores
+        // log this high score
+        if (localStorage.getItem("score") === null){
+            localStorage.setItem("score", JSON.stringify(saveObj) )
+        }
+
+        // if the pulled data is an array of objects, 
+        // iterate through each object before pushing 
+        else if (tempScores.length > 1) {
+            tempScores.forEach(element => {
+                return pulledScores.push(element);
+            })
+            pulledScores.push(saveObj);
+            console.log(pulledScores)
+            localStorage.setItem("score", JSON.stringify(pulledScores))
+        }
+        
+        // if the pulled data is a single object
+        // i.e if it's the second score  
+        // turn into an array of length 2 
+        else {
+            pulledScores.push(tempScores)
+            pulledScores.push(saveObj)
+            localStorage.setItem("score", JSON.stringify(pulledScores))
+        }
     } 
 })
 
