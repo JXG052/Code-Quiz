@@ -21,6 +21,7 @@ const initials = document.querySelector('#initials')
 const saved = document.querySelector(".saved");
 const error = document.querySelector(".error");
 const toggleSoundBtn = document.querySelector("#toggleSound")
+const feedbackEl = document.querySelector(".feedback")
 
 // AUDIO
 let soundOn = true;
@@ -42,7 +43,7 @@ toggleSoundBtn.addEventListener("click", function (){
 
 // Changeable Variables
 let questionIndex = 0;
-let timeLeft = 20
+let timeLeft = 60
 let intervalId = null
 let score = 0;
 let highScoresArray = []
@@ -68,7 +69,7 @@ const countDown = () => {
 
 // Displays Next Question based on the questionIndex
 const displayQuestion = () => {
-
+    feedbackEl.textContent = ""
     // if we've finished quiz
     if (questionIndex >= questionsArray.length){
         questionsScreen.classList.toggle("hide");
@@ -108,8 +109,10 @@ const displayQuestion = () => {
                     if (e.target.innerText === answersArray[questionIndex]){
                         if (soundOn) {
                             correctSound.play()
+                            feedbackEl.textContent = "Correct!"
                             
                         }
+                        feedbackEl.textContent = "Correct!"
                         score ++;
                         questionIndex ++;
 
@@ -118,12 +121,13 @@ const displayQuestion = () => {
                         if (soundOn){
                             incorrectSound.play()
                         }
-                        
+                        feedbackEl.textContent = "Wrong"
                         questionIndex ++;
                         timeLeft -= 10;
                     }
                     // next question
-                    displayQuestion()
+                    setTimeout(displayQuestion,1000)
+                    
                 })
             }   
     }
@@ -132,8 +136,8 @@ const displayQuestion = () => {
 // EVENTS 
 startBtn.addEventListener('click', function() {
     
-    //reset timer to 20
-    timeLeft = 20;
+    //reset timer to 60
+    timeLeft = 60;
 
     // start timer
     intervalId = setInterval(countDown, 1000)
