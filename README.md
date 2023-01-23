@@ -22,7 +22,9 @@ n/a
 
 ## Usage
 
-Open Web Page, click generate password and follow the prompts.
+Open Web Page, sound will automatically play so feel free to toggle. It gets annoying after a while!
+
+Answer questions. Save your score with initials. Initials must be 2 or 3 letters. I have chosen to allow for multiple highscores of the same user initials.
 
 ![image of the start screen](/assets/images/screenshot.png)
 
